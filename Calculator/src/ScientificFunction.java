@@ -1,6 +1,6 @@
 
 
-public class ScientificFunction extends ScientificAbstract {
+public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory, ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
     InputSection inputSection;
     // Constructor
     public ScientificFunction(double num, String sign, InputSection inputSection) {
@@ -10,79 +10,79 @@ public class ScientificFunction extends ScientificAbstract {
 
     // Method to calculate square of a number
     @Override
-    double square() {
+	public double square() {
         return num * num;
     }
 
     // Method to calculate cube of a number
     @Override
-    double cube() {
+    public double cube() {
         return num * num * num;
     }
 
     // Method to calculate custom power of a number
     @Override
-    double customPower(double base, double exponent) {
+    public double customPower(double base, double exponent) {
         return Math.pow(base, exponent);
     }
 
     // Method to calculate tenth power of a number
     @Override
-    double tenthPower() {
+    public double tenthPower() {
         return Math.pow(10, num);
     }
 
     // Method to calculate reciprocal of a number
     @Override
-    double fraction() {
+    public double fraction() {
         return 1 / num;
     }
 
     // Method to return Euler's number (e)
     @Override
-    double exponential() {
+    public double exponential() {
         return 2.718281828459045;
     }
 
     // Method to calculate exponential power
     @Override
-    double exponentialPower() {
+    public double exponentialPower() {
         return Math.pow(2.718281828459045, num);
     }
 
     // Method to calculate square root of a number
     @Override
-    double sqroot() {
+    public double sqroot() {
         return Math.sqrt(num);
     }
 
     // Method to calculate cube root of a number
     @Override
-    double cubeRoot() {
+    public double cubeRoot() {
         return Math.cbrt(num);
     }
 
     // Method to calculate custom root of a number
     @Override
-    double customRoot(double base, double exponent) {
+    public double customRoot(double base, double exponent) {
         return Math.pow(base, 1.0 / exponent);
     }
 
     // Method to calculate natural logarithm of a number
     @Override
-    double ln() {
+    public double ln() {
         return Math.log(num);
     }
 
     // Method to calculate base-10 logarithm of a number
     @Override
-    double log() {
+    public double log() {
         return Math.log10(num);
     }
 
     // Method to calculate factorial of a number
     @Override
-    double factorial() {
+    public double factorial() {
         if (num < 0) {
             inputSection.setInputField("NaN");
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
@@ -96,21 +96,21 @@ public class ScientificFunction extends ScientificAbstract {
 
     // Method to calculate sine of an angle in degrees
     @Override
-    double sin() {
+    public double sin() {
         double resultInRadians = degreeToRadian(num);
         return Math.sin(resultInRadians);
     }
 
     // Method to calculate cosine of an angle in degrees
     @Override
-    double cos() {
+    public double cos() {
         double resultInRadians = degreeToRadian(num);
         return Math.cos(resultInRadians);
     }
 
     // Method to calculate tangent of an angle in degrees
     @Override
-    double tan() {
+    public double tan() {
         if(num==90){
             return Double.NaN;
         }
@@ -119,18 +119,18 @@ public class ScientificFunction extends ScientificAbstract {
     }
 
     @Override
-    double arcSin(){
+    public double arcSin(){
         double resultInRadians = degreeToRadian(num);
         return Math.asin(resultInRadians);
     }
     @Override
-    double arcCos() {
+    public double arcCos() {
         
         double resultInRadians=degreeToRadian(num);
         return Math.acos(resultInRadians);
     }
     @Override
-    double arcTan() {
+    public double arcTan() {
         double resultInRadians=degreeToRadian(num);
         return Math.atan(resultInRadians);
     }
@@ -139,85 +139,76 @@ public class ScientificFunction extends ScientificAbstract {
 
     // Method to calculate hyperbolic sine of an angle in degrees
     @Override
-    double sinH() {
+    public double sinH() {
         double resultInDegrees = Math.toDegrees(Math.sinh(num));
         return resultInDegrees;
     }
 
     // Method to calculate hyperbolic cosine of an angle in degrees
     @Override
-    double cosH() {
+    public double cosH() {
         double resultInDegrees = Math.toDegrees(Math.cosh(num));
         return resultInDegrees;
     }
 
     // Method to calculate hyperbolic tangent of an angle in degrees
     @Override
-    double tanH() {
+    public double tanH() {
         double resultInDegrees = Math.toDegrees(Math.tanh(num));
         return resultInDegrees;
     }
 
     @Override
-    double arcTanH() {
+    public double arcTanH() {
         double resultInRadians=degreeToRadian(num);
         return inverse(resultInRadians, "atanh");
     }
 
     @Override
-    double arcSinH() {
+    public double arcSinH() {
         double resultInRadians=degreeToRadian(num);
         return inverse(resultInRadians, "asinh");
     }
     @Override
-    double arcCosH() {
+    public double arcCosH() {
         double resultInRadians=degreeToRadian(num);
         return inverse(resultInRadians, "atanh ");
     }
 
     // Method to return Euler's number (e)
     @Override
-    double singleE() {
+    public double singleE() {
         return 2.718281828459045;
     }
 
-    // Method to return double of Euler's number (e)
-    @Override
-    double doubleE() {
-        return 0; // Not implemented
-    }
+
 
     // Method to convert degrees to radians
     @Override
-    double rad() {
+    public double rad() {
         return Math.toRadians(num);
     }
 
     @Override
-    double mc(){
+    public double mc(){
         return inputSection.resetMemory();
     }
 
     @Override
-    double mread(){
+    public double mread(){
         return inputSection.getMemoryValue();
     }
 
     @Override
-    double mplus(){
+    public double mplus(){
         return inputSection.setMemoryValue(num);
     }
 
     @Override
-    double mminus(){ 
+    public double mminus(){ 
         return inputSection.subtractFromMemory(num);
     }
 
-    // Method to generate a random number
-    @Override
-    double rand() {
-        return 0; // Not implemented
-    }
 
     // Method to convert degrees to radians
     public double degreeToRadian(double num) {
