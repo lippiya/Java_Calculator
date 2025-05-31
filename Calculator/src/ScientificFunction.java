@@ -1,11 +1,13 @@
 
 
 public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory, ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
-    InputSection inputSection;
+    ResultHandler resultHandler;
+    MemoryHandler memoryHandler;
     // Constructor
-    public ScientificFunction(double num, String sign, InputSection inputSection) {
+    public ScientificFunction(double num, String sign, ResultHandler resultHandler, MemoryHandler memoryHandler) {
         super(num, sign);
-        this.inputSection=inputSection;
+        this.resultHandler = resultHandler;
+        this.memoryHandler = memoryHandler;
     }
 
     // Method to calculate square of a number
@@ -84,7 +86,7 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
     @Override
     public double factorial() {
         if (num < 0) {
-            inputSection.setInputField("NaN");
+            resultHandler.showError("Factorial is not defined for negative number");
             throw new IllegalArgumentException("Factorial is not defined for negative numbers");
         }
         double result = 1;
@@ -191,22 +193,22 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
 
     @Override
     public double mc(){
-        return inputSection.resetMemory();
+        return memoryHandler.resetMemory();
     }
 
     @Override
     public double mread(){
-        return inputSection.getMemoryValue();
+        return memoryHandler.getMemoryValue();
     }
 
     @Override
     public double mplus(){
-        return inputSection.setMemoryValue(num);
+        return memoryHandler.setMemoryValue(num);
     }
 
     @Override
     public double mminus(){ 
-        return inputSection.subtractFromMemory(num);
+        return memoryHandler.subtractFromMemory(num);
     }
 
 

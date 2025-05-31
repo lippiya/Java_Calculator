@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class InputSection extends JPanel {
+public class InputSection extends JPanel implements ResultHandler, MemoryHandler {
 
     private final JTextField inputField;
 
@@ -73,4 +73,15 @@ public class InputSection extends JPanel {
         setInputField(String.valueOf(memoryValue));
         return result;
     }
+	@Override
+	public void showResult(String text) {
+		setInputField(text);
+		
+	}
+	@Override
+	public void showError(String message) {
+		setInputField("NaN");
+		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+		
+	}
 }

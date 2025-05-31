@@ -6,11 +6,16 @@ public class ScientificSection extends JPanel {
     Font myFont = new Font("Arial", Font.PLAIN, 30);
     // Reference to InputSection
     InputSection inputSection;
+    ResultHandler resultHandler;
+    MemoryHandler memoryHandler;
+
     private boolean showInverseFunctions = false;
 
     // Constructor
     public ScientificSection(InputSection inputSection) {
         this.inputSection = inputSection;
+        this.resultHandler = inputSection;
+        this.memoryHandler = inputSection;
         if (inputSection == null) {
             System.out.println("InputSection object is null!");
         } else {
@@ -51,17 +56,17 @@ public class ScientificSection extends JPanel {
                         inputSection.updateInputField(buttonText);
                         break;
                     case "mc":
-                        inputSection.resetMemory();
+                        memoryHandler.resetMemory();
                         break;
                     case "m+":
                         applyUnaryFunction("mplus");
                         break;
                     case "m-":
                         double numberToRemove=Double.parseDouble(inputSection.getInputFieldText());
-                        inputSection.subtractFromMemory(numberToRemove);
+                        memoryHandler.subtractFromMemory(numberToRemove);
                         break;
                     case "mr":
-                       inputSection.getMemoryValue();
+                    	memoryHandler.getMemoryValue();
          
                         break;
                     case "x²":
@@ -124,7 +129,7 @@ public class ScientificSection extends JPanel {
                         break;
                     case "π":
                         double result2 = Math.PI;
-                        inputSection.setInputField(String.valueOf(result2));
+                        resultHandler.showResult(String.valueOf(result2));
                         break;
                     case "x√y":
                         inputSection.updateInputField("√");
@@ -157,7 +162,7 @@ public class ScientificSection extends JPanel {
             return;
         }
         double num = Double.parseDouble(inputSection.getInputFieldText());
-        ScientificFunction scientificFunction = new ScientificFunction(num, functionName, inputSection);
+        ScientificFunction scientificFunction = new ScientificFunction(num, functionName, resultHandler, memoryHandler);
         double result = 0;
         switch (functionName) {
             case "mc":
@@ -201,12 +206,12 @@ public class ScientificSection extends JPanel {
                 result = scientificFunction.exponentialPower();
                 break;
             case "mread":
-                // result = scientificFunction.mread();
+                result = scientificFunction.mread();
                 System.out.print("You clicked the mr button");
                 break;
             default:
                 break;
         }
-        inputSection.setInputField(String.valueOf(result));
+        resultHandler.showResult(String.valueOf(result));
     }
 }
