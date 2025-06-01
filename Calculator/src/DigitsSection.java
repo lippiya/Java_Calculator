@@ -1,3 +1,4 @@
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,7 +12,7 @@ class DigitsSection extends JPanel {
 	private InputSection inputSection;
 	private ArrayList<Double> operands = new ArrayList<>();
 	private ArrayList<String> operations = new ArrayList<>();
-    // Font for the buttons
+    
     Font myFont = new Font("Arial", Font.PLAIN, 30);
     // References to other sections
     ArithmeticFunction arithmeticFunction;
@@ -146,12 +147,10 @@ class DigitsSection extends JPanel {
                     inputSection.updateInputField(buttonText);
                 }
             });
-            // Adding button to the panel
             add(button);
         }
     }
 
-    // Method to extract operator from input
     private char extractSign(String input) {
         String newInput = removeBrackets(input);
         System.out.println(newInput);
@@ -165,7 +164,6 @@ class DigitsSection extends JPanel {
         return sign;
     }
 
-    // Method to remove unnecessary characters from input
     public String removeBrackets(String input) {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {

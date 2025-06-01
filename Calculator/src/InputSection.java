@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +10,7 @@ public class InputSection extends JPanel implements ResultHandler, MemoryHandler
 
     public InputSection() {
         setLayout(new BorderLayout());
-        //Input field created
+        
         inputField = new JTextField();
         inputField.setEditable(false);
         inputField.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -18,7 +19,7 @@ public class InputSection extends JPanel implements ResultHandler, MemoryHandler
         inputField.setForeground(Color.decode("#FFFFFF"));
         add(inputField, BorderLayout.CENTER);
     }
-    //Function to update the input field
+    
     public void updateInputField(String text) {
         String currentText = inputField.getText();
         if (currentText.equals("0")) {
@@ -27,12 +28,12 @@ public class InputSection extends JPanel implements ResultHandler, MemoryHandler
             inputField.setText(currentText + text);
         }
     }
-    //Function to delete everything from the input field
+    
     public void deleteInputField() {
-        inputField.setText(""); // Set text to empty string to delete it
+        inputField.setText(""); 
     }
     
-    //Function to remove the last character from the input field.
+   
     public void removeCurrentText(){
         String currentText=inputField.getText();
         if(!currentText.isEmpty()){
@@ -56,7 +57,7 @@ public class InputSection extends JPanel implements ResultHandler, MemoryHandler
 
     public double setMemoryValue(double num){
     memoryValue = num;
-    setInputField(Double.toString(memoryValue)); // Update input field with new memory value
+    setInputField(Double.toString(memoryValue)); 
     return memoryValue;        
     }
 

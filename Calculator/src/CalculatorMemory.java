@@ -5,3 +5,4 @@ public interface CalculatorMemory {
 	public double mminus();
 	public double mread();
 }
+

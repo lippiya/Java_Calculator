@@ -1,5 +1,15 @@
 
 
+import main.BasicArithmetic;
+import main.CalculatorMemory;
+import main.ExponentialFunctions;
+import main.HyperbolicFunctions;
+import main.MemoryHandler;
+import main.ResultHandler;
+import main.ScientificAbstract;
+import main.SpecialFunctions;
+import main.TrigonometricFunctions;
+
 public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory, ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
     ResultHandler resultHandler;
     MemoryHandler memoryHandler;
@@ -10,79 +20,70 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         this.memoryHandler = memoryHandler;
     }
 
-    // Method to calculate square of a number
+    
     @Override
 	public double square() {
         return num * num;
     }
 
-    // Method to calculate cube of a number
+    
     @Override
     public double cube() {
         return num * num * num;
     }
 
-    // Method to calculate custom power of a number
     @Override
     public double customPower(double base, double exponent) {
         return Math.pow(base, exponent);
     }
 
-    // Method to calculate tenth power of a number
+    
     @Override
     public double tenthPower() {
         return Math.pow(10, num);
     }
 
-    // Method to calculate reciprocal of a number
     @Override
     public double fraction() {
         return 1 / num;
     }
 
-    // Method to return Euler's number (e)
     @Override
     public double exponential() {
         return 2.718281828459045;
     }
 
-    // Method to calculate exponential power
     @Override
     public double exponentialPower() {
         return Math.pow(2.718281828459045, num);
     }
 
-    // Method to calculate square root of a number
+    
     @Override
     public double sqroot() {
         return Math.sqrt(num);
     }
 
-    // Method to calculate cube root of a number
     @Override
     public double cubeRoot() {
         return Math.cbrt(num);
     }
 
-    // Method to calculate custom root of a number
     @Override
     public double customRoot(double base, double exponent) {
         return Math.pow(base, 1.0 / exponent);
     }
 
-    // Method to calculate natural logarithm of a number
     @Override
     public double ln() {
         return Math.log(num);
     }
 
-    // Method to calculate base-10 logarithm of a number
     @Override
     public double log() {
         return Math.log10(num);
     }
 
-    // Method to calculate factorial of a number
     @Override
     public double factorial() {
         if (num < 0) {
@@ -96,64 +97,58 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return result;
     }
 
-    // Method to calculate sine of an angle in degrees
     @Override
     public double sin() {
-        double resultInRadians = degreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.sin(resultInRadians);
     }
 
-    // Method to calculate cosine of an angle in degrees
     @Override
     public double cos() {
-        double resultInRadians = degreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.cos(resultInRadians);
     }
 
-    // Method to calculate tangent of an angle in degrees
     @Override
     public double tan() {
         if(num==90){
             return Double.NaN;
         }
-        double resultInRadians = degreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.tan(resultInRadians);
     }
 
     @Override
     public double arcSin(){
-        double resultInRadians = degreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.asin(resultInRadians);
     }
     @Override
     public double arcCos() {
         
-        double resultInRadians=degreeToRadian(num);
+        double resultInRadians= convertDegreeToRadian(num);
         return Math.acos(resultInRadians);
     }
     @Override
     public double arcTan() {
-        double resultInRadians=degreeToRadian(num);
+        double resultInRadians= convertDegreeToRadian(num);
         return Math.atan(resultInRadians);
     }
 
 
 
-    // Method to calculate hyperbolic sine of an angle in degrees
     @Override
     public double sinH() {
         double resultInDegrees = Math.toDegrees(Math.sinh(num));
         return resultInDegrees;
     }
 
-    // Method to calculate hyperbolic cosine of an angle in degrees
     @Override
     public double cosH() {
         double resultInDegrees = Math.toDegrees(Math.cosh(num));
         return resultInDegrees;
     }
 
-    // Method to calculate hyperbolic tangent of an angle in degrees
     @Override
     public double tanH() {
         double resultInDegrees = Math.toDegrees(Math.tanh(num));
@@ -162,18 +157,18 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
 
     @Override
     public double arcTanH() {
-        double resultInRadians=degreeToRadian(num);
+        double resultInRadians=convertDegreeToRadian(num);
         return inverse(resultInRadians, "atanh");
     }
 
     @Override
     public double arcSinH() {
-        double resultInRadians=degreeToRadian(num);
+        double resultInRadians=convertDegreeToRadian(num);
         return inverse(resultInRadians, "asinh");
     }
     @Override
     public double arcCosH() {
-        double resultInRadians=degreeToRadian(num);
+        double resultInRadians=convertDegreeToRadian(num);
         return inverse(resultInRadians, "atanh ");
     }
 
@@ -212,8 +207,7 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
     }
 
 
-    // Method to convert degrees to radians
-    public double degreeToRadian(double num) {
+    public double convertDegreeToRadian(double num) {
         double result = (num * Math.PI) / 180;
         return result;
     }
