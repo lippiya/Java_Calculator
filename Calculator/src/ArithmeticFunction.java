@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 
 public class ArithmeticFunction implements ArithmeticInterface {
@@ -12,12 +11,12 @@ public class ArithmeticFunction implements ArithmeticInterface {
         this.operands = operands;
         this.operations = operations;
     }
-    
+
     @Override
     public double addition(double num1, double num2) {
         return num1 + num2;
     }
-    
+
     @Override
     public double subtraction(double num1, double num2) {
         return num1 - num2;
@@ -34,18 +33,19 @@ public class ArithmeticFunction implements ArithmeticInterface {
         return num1 / num2;
     }
 
-	private void handleDivideByZero(double num2) {
-		if (num2 == 0) {
+    private void handleDivideByZero(double num2) {
+        if (num2 == 0) {
             inputSection.setInputField("NaN");
             throw new ArithmeticException("Cannot divide by zero");
+
         }
-	}
- 
+    }
+
     public String performOperation() {
-        
+
         double result = operands.get(0);
         StringBuilder operationString = new StringBuilder("[").append(operands.get(0)).append("]");
-     
+
         for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
             // Ensure that there are enough operands in the list
@@ -65,22 +65,21 @@ public class ArithmeticFunction implements ArithmeticInterface {
                 case "-":
                     result = subtraction(result, operand);
                     break;
-                default:        
+                default:
                     throw new IllegalArgumentException("Invalid operation sign: " + operation);
             }
         }
-        
+
         return checkResultIsNum(result, operationString);
     }
 
-
-	private String checkResultIsNum(double result, StringBuilder operationString) {
-		if (result % 1 == 0) {
+    private String checkResultIsNum(double result, StringBuilder operationString) {
+        if (result % 1 == 0) {
             System.out.println("Performing operation: " + operationString + " = " + result);
             return String.valueOf((int) result);
         } else {
             System.out.println("Performing operation: " + operationString + " = " + result);
             return String.valueOf(result);
         }
-	}
+    }
 }

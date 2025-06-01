@@ -1,5 +1,4 @@
 
-
 import main.BasicArithmetic;
 import main.CalculatorMemory;
 import main.ExponentialFunctions;
@@ -10,9 +9,11 @@ import main.ScientificAbstract;
 import main.SpecialFunctions;
 import main.TrigonometricFunctions;
 
-public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory, ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
+public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory,
+        ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
     ResultHandler resultHandler;
     MemoryHandler memoryHandler;
+
     // Constructor
     public ScientificFunction(double num, String sign, ResultHandler resultHandler, MemoryHandler memoryHandler) {
         super(num, sign);
@@ -20,13 +21,11 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         this.memoryHandler = memoryHandler;
     }
 
-    
     @Override
-	public double square() {
+    public double square() {
         return num * num;
     }
 
-    
     @Override
     public double cube() {
         return num * num * num;
@@ -37,7 +36,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return Math.pow(base, exponent);
     }
 
-    
     @Override
     public double tenthPower() {
         return Math.pow(10, num);
@@ -58,7 +56,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return Math.pow(2.718281828459045, num);
     }
 
-    
     @Override
     public double sqroot() {
         return Math.sqrt(num);
@@ -111,7 +108,7 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
 
     @Override
     public double tan() {
-        if(num==90){
+        if (num == 90) {
             return Double.NaN;
         }
         double resultInRadians = convertDegreeToRadian(num);
@@ -119,23 +116,23 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
     }
 
     @Override
-    public double arcSin(){
+    public double arcSin() {
         double resultInRadians = convertDegreeToRadian(num);
         return Math.asin(resultInRadians);
     }
+
     @Override
     public double arcCos() {
-        
-        double resultInRadians= convertDegreeToRadian(num);
+
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.acos(resultInRadians);
     }
+
     @Override
     public double arcTan() {
-        double resultInRadians= convertDegreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return Math.atan(resultInRadians);
     }
-
-
 
     @Override
     public double sinH() {
@@ -157,18 +154,19 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
 
     @Override
     public double arcTanH() {
-        double resultInRadians=convertDegreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return inverse(resultInRadians, "atanh");
     }
 
     @Override
     public double arcSinH() {
-        double resultInRadians=convertDegreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return inverse(resultInRadians, "asinh");
     }
+
     @Override
     public double arcCosH() {
-        double resultInRadians=convertDegreeToRadian(num);
+        double resultInRadians = convertDegreeToRadian(num);
         return inverse(resultInRadians, "atanh ");
     }
 
@@ -178,8 +176,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return 2.718281828459045;
     }
 
-
-
     // Method to convert degrees to radians
     @Override
     public double rad() {
@@ -187,25 +183,24 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
     }
 
     @Override
-    public double mc(){
+    public double mc() {
         return memoryHandler.resetMemory();
     }
 
     @Override
-    public double mread(){
+    public double mread() {
         return memoryHandler.getMemoryValue();
     }
 
     @Override
-    public double mplus(){
+    public double mplus() {
         return memoryHandler.setMemoryValue(num);
     }
 
     @Override
-    public double mminus(){ 
+    public double mminus() {
         return memoryHandler.subtractFromMemory(num);
     }
-
 
     public double convertDegreeToRadian(double num) {
         double result = (num * Math.PI) / 180;
@@ -223,5 +218,5 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         }
         return result;
     }
-      
+
 }

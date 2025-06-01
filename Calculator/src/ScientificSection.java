@@ -28,15 +28,14 @@ public class ScientificSection extends JPanel {
         String[] scientificButtonLabels = {
                 "(", ")", "mc", "m+", "m-",
                 "mr", "2nd", "x²", "x³", "X^y",
-                "e^x", "10^x", "1/x", "√", "3√","x√y",
+                "e^x", "10^x", "1/x", "√", "3√", "x√y",
                 "LN(x)", "log", "x!", "sin", "cos",
                 "tan", "e", "EE", "Rad", "sinh",
-                "cosh", "tanh", "π", "rand"};
+                "cosh", "tanh", "π", "rand" };
 
-
-        String[] renderNewButtons={
-            "arcSin","arcCos","arcTan",
-            "arcSiH","arcCoH","arcTaH"};
+        String[] renderNewButtons = {
+                "arcSin", "arcCos", "arcTan",
+                "arcSiH", "arcCoH", "arcTaH" };
 
         // Adding buttons
         for (String label : scientificButtonLabels) {
@@ -62,12 +61,12 @@ public class ScientificSection extends JPanel {
                         applyUnaryFunction("mplus");
                         break;
                     case "m-":
-                        double numberToRemove=Double.parseDouble(inputSection.getInputFieldText());
+                        double numberToRemove = Double.parseDouble(inputSection.getInputFieldText());
                         memoryHandler.subtractFromMemory(numberToRemove);
                         break;
                     case "mr":
-                    	memoryHandler.getMemoryValue();
-         
+                        memoryHandler.getMemoryValue();
+
                         break;
                     case "x²":
                         applyUnaryFunction("square");
@@ -79,10 +78,11 @@ public class ScientificSection extends JPanel {
                         applyUnaryFunction("sqroot");
                         break;
                     case "2nd":
-                        showInverseFunctions=!showInverseFunctions;
-                        for(int i=0 ; i<renderNewButtons.length; i++){
-                            JButton secondButton=(JButton) getComponent(scientificButtonLabels.length-1-i);
-                            secondButton.setText(showInverseFunctions ? renderNewButtons[i] : scientificButtonLabels[scientificButtonLabels.length - 1 - i]);
+                        showInverseFunctions = !showInverseFunctions;
+                        for (int i = 0; i < renderNewButtons.length; i++) {
+                            JButton secondButton = (JButton) getComponent(scientificButtonLabels.length - 1 - i);
+                            secondButton.setText(showInverseFunctions ? renderNewButtons[i]
+                                    : scientificButtonLabels[scientificButtonLabels.length - 1 - i]);
                         }
                         break;
                     case "3√":
@@ -118,7 +118,7 @@ public class ScientificSection extends JPanel {
                     case "cosh":
                         inputSection.updateInputField("coh");
                         break;
-                    
+
                     case "arcSin":
                     case "arcCos":
                     case "arcTan":
@@ -155,7 +155,6 @@ public class ScientificSection extends JPanel {
         }
     }
 
-    // Method to apply unary functions
     private void applyUnaryFunction(String functionName) {
         String inputText = inputSection.getInputFieldText();
         if (inputText.isEmpty() || !inputText.matches("[-+]?\\d*(\\.\\d+)?")) {
@@ -166,14 +165,14 @@ public class ScientificSection extends JPanel {
         double result = 0;
         switch (functionName) {
             case "mc":
-                result=scientificFunction.mc();
+                result = scientificFunction.mc();
                 System.out.println(result);
                 break;
             case "mplus":
-                result=scientificFunction.mplus();
+                result = scientificFunction.mplus();
                 break;
             case "mminus":
-                result=scientificFunction.mminus();
+                result = scientificFunction.mminus();
                 break;
             case "square":
                 result = scientificFunction.square();

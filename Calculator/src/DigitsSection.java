@@ -18,8 +18,6 @@ class DigitsSection extends JPanel {
     ArithmeticFunction arithmeticFunction;
     ScientificFunction scientificFunction;
 
-
-    // Constructor
     public DigitsSection(InputSection inputSection) {
         this.inputSection = inputSection;
 
