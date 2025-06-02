@@ -3,6 +3,9 @@ import java.awt.*;
 import javax.swing.*;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.*;
 
 class DigitsSection extends JPanel {
@@ -46,6 +49,7 @@ class DigitsSection extends JPanel {
                     // Handling evaluation
                     char sign = extractSign(input);
                     if (sign == ' ') {
+                        initScientificFunctions();
                         applyScientificFunctions();
                     } else {
                         splitInput(sign, input);
@@ -167,84 +171,56 @@ class DigitsSection extends JPanel {
         return result.toString();
     }
 
+    private final Map<String, Function<Double, Double>> scientificFunctions = new LinkedHashMap<>();
+
+    private void initScientificFunctions() {
+        scientificFunctions.put("sin", x -> new ScientificFunction(x, "sin", inputSection, inputSection).sin());
+
+        scientificFunctions.put("arcSin",
+                x -> new ScientificFunction(x, "arcSin", inputSection, inputSection).arcSin());
+
+        scientificFunctions.put("cos", x -> new ScientificFunction(x, "cos", inputSection, inputSection).cos());
+        scientificFunctions.put("arcCos",
+                x -> new ScientificFunction(x, "arcCos", inputSection, inputSection).arcCos());
+
+        scientificFunctions.put("tan", x -> new ScientificFunction(x, "tan", inputSection, inputSection).tan());
+
+        scientificFunctions.put("arcTan",
+                x -> new ScientificFunction(x, "arcTan", inputSection, inputSection).arcTan());
+
+        scientificFunctions.put("log", x -> new ScientificFunction(x, "log", inputSection, inputSection).log());
+
+        scientificFunctions.put("ln", x -> new ScientificFunction(x, "ln", inputSection, inputSection).ln());
+
+        scientificFunctions.put("sih", x -> new ScientificFunction(x, "sinh", inputSection, inputSection).sinH());
+
+        scientificFunctions.put("arcSiH",
+                x -> new ScientificFunction(x, "arcSinh", inputSection, inputSection).arcSinH());
+
+        scientificFunctions.put("coh", x -> new ScientificFunction(x, "cosh", inputSection, inputSection).cosH());
+
+        scientificFunctions.put("arcCoH",
+                x -> new ScientificFunction(x, "arcCosh", inputSection, inputSection).arcCosH());
+
+        scientificFunctions.put("tah", x -> new ScientificFunction(x, "tanh", inputSection, inputSection).tanH());
+
+        scientificFunctions.put("arcTaH",
+                x -> new ScientificFunction(x, "arcTanh", inputSection, inputSection).arcTanH());
+        scientificFunctions.put("√", x -> Math.sqrt(x));
+    }
+
     private void applyScientificFunctions() {
         String inputText = inputSection.getInputFieldText();
         double result = 0;
 
-        if (inputText.startsWith("sin")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "sin", inputSection, inputSection);
-            result = scientificFunction.sin();
-        } else if (inputText.startsWith("arcSin")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "arcSin", inputSection, inputSection);
-            result = scientificFunction.arcSin();
-        } else if (inputText.startsWith("cos")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "cos", inputSection, inputSection);
-            result = scientificFunction.cos();
-        } else if (inputText.startsWith("arcCos")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "sinh", inputSection, inputSection);
-            result = scientificFunction.arcCos();
-        } else if (inputText.startsWith("tan")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "tan", inputSection, inputSection);
-            result = scientificFunction.tan();
-        } else if (inputText.startsWith("arcTan")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "arcTan", inputSection, inputSection);
-            result = scientificFunction.arcTan();
-        } else if (inputText.startsWith("log")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "log", inputSection, inputSection);
-            result = scientificFunction.log();
-        } else if (inputText.startsWith("ln")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "ln", inputSection, inputSection);
-            result = scientificFunction.ln();
-        } else if (inputText.startsWith("sih")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "sinh", inputSection, inputSection);
-            result = scientificFunction.sinH();
-        } else if (inputText.startsWith("arcSiH")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "arcSinh", inputSection, inputSection);
-            result = scientificFunction.arcSinH();
-        } else if (inputText.startsWith("coh")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "cosh", inputSection, inputSection);
-            result = scientificFunction.cosH();
-        } else if (inputText.startsWith("arcCoH")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "arcCosh", inputSection, inputSection);
-            result = scientificFunction.arcCosH();
-        } else if (inputText.startsWith("tah")) {
-            String numericPart = inputText.substring(3);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "tanh", inputSection, inputSection);
-            result = scientificFunction.tanH();
-        } else if (inputText.startsWith("arcTaH")) {
-            String numericPart = inputText.substring(6);
-            double num = Double.parseDouble(numericPart);
-            scientificFunction = new ScientificFunction(num, "sinh", inputSection, inputSection);
-            result = scientificFunction.arcTanH();
-        } else if (inputText.startsWith("√")) {
-            String numericPart = inputText.substring(1); // Extract numeric part after "√"
-            double num = Double.parseDouble(numericPart);
-            result = Math.sqrt(num);
+        for (Map.Entry<String, Function<Double, Double>> entry : scientificFunctions.entrySet()) {
+            String prefix = entry.getKey();
+            if (inputText.startsWith(prefix)) {
+                String numericPart = inputText.substring(prefix.length());
+                double num = Double.parseDouble(numericPart);
+                result = entry.getValue().apply(num);
+                break;
+            }
         }
 
         inputSection.setInputField(String.valueOf(result));

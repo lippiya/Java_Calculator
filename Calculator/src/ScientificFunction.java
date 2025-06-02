@@ -160,7 +160,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return inverse(resultInRadians, "atanh ");
     }
 
-    // Method to return Euler's number (e)
     @Override
     public double singleE() {
         return 2.718281828459045;
