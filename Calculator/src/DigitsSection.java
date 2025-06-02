@@ -25,11 +25,11 @@ class DigitsSection extends JPanel {
         setLayout(new GridLayout(5, 4, 5, 5));
 
         // Button labels
-        String[] buttonLabels = {"C", "+/-", "%", "/",
+        String[] buttonLabels = { "C", "+/-", "%", "/",
                 "7", "8", "9", "*",
                 "4", "5", "6", "-",
                 "1", "2", "3", "+",
-                "del", "0", ".", "="};
+                "del", "0", ".", "=" };
 
         // Creating buttons and setting properties
         for (String label : buttonLabels) {
@@ -37,17 +37,11 @@ class DigitsSection extends JPanel {
             button.setFont(myFont);
             button.setForeground(Color.decode("#FFFFFF"));
             // Setting background colors based on button label
-            if (label.equals("C") || label.equals("+/-") || label.equals("%")) {
-                button.setBackground(Color.decode("#454442"));
-            } else if (label.equals("/") || label.equals("*") || label.equals("-") || label.equals("+") || label.equals("=")) {
-                button.setBackground(Color.decode("#FF9F09"));
-            } else {
-                button.setBackground(Color.decode("#636361"));
-            }
-
+            button.setBackground(getBackgroundColor(label));
             // Adding action listener to the button
             button.addActionListener(e -> {
                 String buttonText = button.getText();
+                String input = inputSection.getInputFieldText();
                 // Handling different button actions
                 if (buttonText.equals("C")) {
                     inputSection.deleteInputField();
@@ -55,97 +49,110 @@ class DigitsSection extends JPanel {
                     inputSection.removeCurrentText();
                 } else if (buttonText.equals("=")) {
                     // Handling evaluation
-                    String input = inputSection.getInputFieldText();
                     char sign = extractSign(input);
                     if (sign == ' ') {
                         applyScientificFunctions();
                     } else {
-                        // Splitting input based on operator
-                        String[] operands = input.split(Pattern.quote(String.valueOf(sign)));
-                        if (sign == '√') {
-                            // Square root operation
-                            double num1 = Double.parseDouble(operands[0]);
-                            double num2 = Double.parseDouble(operands[1]);
-                            ScientificFunction scientificFunction=new ScientificFunction(num1, "^",inputSection, inputSection);
-                            double result = scientificFunction.customRoot(num2, num1);
-                            inputSection.setInputField(String.valueOf(result));
-                        } else if (sign == '^') { // Check for '^' sign
-                            // Exponential operation
-                            double num1 = Double.parseDouble(operands[0]);
-                            double num2 = Double.parseDouble(operands[1]);
-                            ScientificFunction scientificFunction=new ScientificFunction(num1, "^",inputSection, inputSection);
-                            double result=scientificFunction.customPower(num1, num2);
-                            inputSection.setInputField(String.valueOf(result));
-                        } else if (sign == 'E') {
-                            // Handling scientific notation
-                            double num1 = Double.parseDouble(operands[0]);
-                            double num2 = Double.parseDouble(operands[1]);
-                            double result = num1 * (Math.pow(10, num2));
-                            inputSection.setInputField(String.valueOf(result));
-                        } else {
-                            // Handling basic arithmetic operations
-                            String[] split = input.split("(?=[-+*/()])|(?<=[-+*/()])");
-                            ArrayList<Double> operandsList = new ArrayList<>();
-                            ArrayList<String> operationsList = new ArrayList<>();
-
-                            for (String token : split) {                 
-                                try {
-                                    if (token.matches("sin\\d*|cos\\d*|tan\\d*|log\\d*|ln\\d*")) {
-                                    // Extract numeric part from the token
-                                    String functionName=token.substring(0,3).trim();
-                                    String numericPart = token.substring(3).trim(); 
-                                    double numericValue =Double.parseDouble(numericPart);
-                                    double number=performScientificAction(functionName,numericValue,inputSection);
-                                    operandsList.add(number);
-                                }
-                            
-                                double number = Double.parseDouble(token);
-                                operandsList.add(number);
-                                    
-                                } catch (NumberFormatException error) {
-                                    if (token.equals("+")) {
-                                        operationsList.add(token);
-                                    }
-                                    else if (token.equals("-")) {
-                                        operationsList.add(token);
-                                    }
-                                    else if (token.equals("/")) {
-                                        operationsList.add(token);
-                                    }
-                                    else if (token.equals("*")) {
-                                        operationsList.add(token);
-                                    }
-                                 
-                                    
-                                }
-                            }
-
-                            ArithmeticFunction arithmeticFunction = new ArithmeticFunction(operandsList, operationsList);
-                            String result = arithmeticFunction.performOperation();
-                            inputSection.setInputField(result);
-                            
-                        }
+                        splitInput(sign, input);
                     }
                 } else if (buttonText.equals("%")) {
                     // Handling percentage calculation
-                    String input = inputSection.getInputFieldText();
-                    char sign = extractSign(input);
-                    String[] operands = input.split("[" + sign + "]");
-                    double num = Double.parseDouble(operands[0]);
-                    double result = num / 100.0;
-                    inputSection.setInputField(String.valueOf(result));
+                    handlePercentageCalculation(input);
                 } else if (buttonText.equals("+/-")) {
                     // Toggling positive/negative sign
-                    String input = inputSection.getInputFieldText();
-                    double number = Double.parseDouble(input);
-                    double result = number * -1;
-                    inputSection.setInputField(String.valueOf(result));
+                    tooglePositiveOrNegativeSign(input);
                 } else {
                     // Updating input field with button text
                     inputSection.updateInputField(buttonText);
                 }
             });
+            // Adding button to the panel
             add(button);
+        }
+    }
+
+    private void tooglePositiveOrNegativeSign(String input) {
+        double number = Double.parseDouble(input);
+        double result = number * -1;
+        inputSection.setInputField(String.valueOf(result));
+    }
+
+    private void handlePercentageCalculation(String input) {
+        char sign = extractSign(input);
+        String[] operands = input.split("[" + sign + "]");
+        double num = Double.parseDouble(operands[0]);
+        double result = num / 100.0;
+        inputSection.setInputField(String.valueOf(result));
+    }
+
+    private Color getBackgroundColor(String label) {
+        if (label.equals("C") || label.equals("+/-") || label.equals("%")) {
+            return Color.decode("#454442");
+        } else if (label.equals("/") || label.equals("*") || label.equals("-") || label.equals("+")
+                || label.equals("=")) {
+            return Color.decode("#FF9F09");
+        } else {
+            return Color.decode("#636361");
+        }
+    }
+
+    private void splitInput(char sign, String input) {
+        // Splitting input based on operator
+    	// Splitting input based on operator
+        String[] operands = input.split(Pattern.quote(String.valueOf(sign)));
+        double num1 = Double.parseDouble(operands[0]);
+        double num2 = Double.parseDouble(operands[1]);
+        ScientificFunction scientificFunction = new ScientificFunction(num1, "^", inputSection);
+        if (sign == '√') {
+            // Square root operation
+            double result = scientificFunction.customRoot(num2, num1);
+            inputSection.setInputField(String.valueOf(result));
+        } else if (sign == '^') { // Check for '^' sign
+            // Exponential operation
+            double result = scientificFunction.customPower(num1, num2);
+            inputSection.setInputField(String.valueOf(result));
+        } else if (sign == 'E') {
+            // Handling scientific notation
+            double result = num1 * (Math.pow(10, num2));
+            inputSection.setInputField(String.valueOf(result));
+        }
+         else {
+            // Handling basic arithmetic operations
+            String[] split = input.split("(?=[-+*/()])|(?<=[-+*/()])");
+            ArrayList<Double> operandsList = new ArrayList<>();
+            ArrayList<String> operationsList = new ArrayList<>();
+
+            for (String token : split) {
+                try {
+                    if (token.matches("sin\\d*|cos\\d*|tan\\d*|log\\d*|ln\\d*")) {
+                        // Extract numeric part from the token
+                        String functionName = token.substring(0, 3).trim();
+                        String numericPart = token.substring(3).trim();
+                        double numericValue = Double.parseDouble(numericPart);
+                        double number = performScientificAction(functionName, numericValue, inputSection);
+                        operandsList.add(number);
+                    }
+
+                    double number = Double.parseDouble(token);
+                    operandsList.add(number);
+
+                } catch (NumberFormatException error) {
+                    if (token.equals("+")) {
+                        operationsList.add(token);
+                    } else if (token.equals("-")) {
+                        operationsList.add(token);
+                    } else if (token.equals("/")) {
+                        operationsList.add(token);
+                    } else if (token.equals("*")) {
+                        operationsList.add(token);
+                    }
+
+                }
+            }
+
+            ArithmeticFunction arithmeticFunction = new ArithmeticFunction(operandsList, operationsList);
+            String result = arithmeticFunction.performOperation();
+            inputSection.setInputField(result);
         }
     }
 
