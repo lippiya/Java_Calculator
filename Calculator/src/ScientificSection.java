@@ -1,5 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
+
+interface ScientificAction {
+    void execute();
+}
 
 public class ScientificSection extends JPanel {
     // Font for buttons
@@ -12,19 +18,15 @@ public class ScientificSection extends JPanel {
     private boolean showInverseFunctions = false;
 
     // Constructor
+    private final Map<String, ScientificAction> scientificActions = new HashMap<>();
+
     public ScientificSection(InputSection inputSection) {
         this.inputSection = inputSection;
-        this.resultHandler = inputSection;
         this.memoryHandler = inputSection;
-        if (inputSection == null) {
-            System.out.println("InputSection object is null!");
-        } else {
-            System.out.println("InputSection object is not null.");
-        }
-        // Setting grid layout
-        setLayout(new GridLayout(5, 5, 5, 5));
+        this.resultHandler = inputSection;
+        this.setLayout(new GridLayout(6, 5)); // atau sesuai jumlah tombol
 
-        // Scientific buttons labels
+        Font myFont = new Font("Arial", Font.BOLD, 24);
         String[] scientificButtonLabels = {
                 "(", ")", "mc", "m+", "m-",
                 "mr", "2nd", "x²", "x³", "X^y",
@@ -37,122 +39,80 @@ public class ScientificSection extends JPanel {
                 "arcSin", "arcCos", "arcTan",
                 "arcSiH", "arcCoH", "arcTaH" };
 
-        // Adding buttons
+        // Inisialisasi action map
+        initScientificActions(scientificButtonLabels, renderNewButtons);
+
         for (String label : scientificButtonLabels) {
             JButton button = new JButton(label);
-
             button.setFont(myFont);
             button.setBackground(Color.decode("#454442"));
             button.setForeground(Color.decode("#FFFFFF"));
+
             button.addActionListener(e -> {
-                String buttonText = button.getText();
-                switch (buttonText) {
-                    // Handling button actions
-                    case "(":
-                        inputSection.updateInputField(buttonText);
-                        break;
-                    case ")":
-                        inputSection.updateInputField(buttonText);
-                        break;
-                    case "mc":
-                        memoryHandler.resetMemory();
-                        break;
-                    case "m+":
-                        applyUnaryFunction("mplus");
-                        break;
-                    case "m-":
-                        double numberToRemove = Double.parseDouble(inputSection.getInputFieldText());
-                        memoryHandler.subtractFromMemory(numberToRemove);
-                        break;
-                    case "mr":
-                        memoryHandler.getMemoryValue();
-
-                        break;
-                    case "x²":
-                        applyUnaryFunction("square");
-                        break;
-                    case "x³":
-                        applyUnaryFunction("cube");
-                        break;
-                    case "√":
-                        applyUnaryFunction("sqroot");
-                        break;
-                    case "2nd":
-                        showInverseFunctions = !showInverseFunctions;
-                        for (int i = 0; i < renderNewButtons.length; i++) {
-                            JButton secondButton = (JButton) getComponent(scientificButtonLabels.length - 1 - i);
-                            secondButton.setText(showInverseFunctions ? renderNewButtons[i]
-                                    : scientificButtonLabels[scientificButtonLabels.length - 1 - i]);
-                        }
-                        break;
-                    case "3√":
-                        applyUnaryFunction("cubeRoot");
-                        break;
-                    case "1/x":
-                        applyUnaryFunction("fraction");
-                        break;
-                    case "e":
-                        double result = 2.718281828459045;
-                        inputSection.updateInputField(String.valueOf(result));
-                        break;
-                    case "LN(x)":
-                        inputSection.updateInputField("ln");
-                        break;
-                    case "log":
-                        inputSection.updateInputField(buttonText);
-                        break;
-                    case "x!":
-                        applyUnaryFunction("factorial");
-                        break;
-                    case "sin":
-                    case "cos":
-                    case "tan":
-                        inputSection.updateInputField(buttonText);
-                        break;
-                    case "tanh":
-                        inputSection.updateInputField("tah");
-                        break;
-                    case "sinh":
-                        inputSection.updateInputField("sih");
-                        break;
-                    case "cosh":
-                        inputSection.updateInputField("coh");
-                        break;
-
-                    case "arcSin":
-                    case "arcCos":
-                    case "arcTan":
-                    case "arcSiH":
-                    case "arcCoH":
-                    case "arcTaH":
-                        inputSection.updateInputField(buttonText);
-                        break;
-                    case "π":
-                        double result2 = Math.PI;
-                        resultHandler.showResult(String.valueOf(result2));
-                        break;
-                    case "x√y":
-                        inputSection.updateInputField("√");
-                        break;
-                    case "X^y":
-                        inputSection.updateInputField("^");
-                        break;
-                    // Add cases for other scientific functions here
-                    case "10^x":
-                        applyUnaryFunction("powerTen");
-                        break;
-                    case "e^x":
-                        applyUnaryFunction("exponentialPower");
-                        break;
-                    case "EE":
-                        inputSection.updateInputField("E");
-                        break;
-                    default:
-                        break;
+                ScientificAction action = scientificActions.get(label);
+                if (action != null) {
+                    action.execute();
+                } else {
+                    inputSection.updateInputField(label);
                 }
             });
-            add(button);
+
+            this.add(button);
         }
+    }
+
+    private void initScientificActions(String[] labels, String[] inverseLabels) {
+        scientificActions.put("(", () -> inputSection.updateInputField("("));
+        scientificActions.put(")", () -> inputSection.updateInputField(")"));
+
+        scientificActions.put("mc", () -> memoryHandler.resetMemory());
+        scientificActions.put("m+", () -> applyUnaryFunction("mplus"));
+        scientificActions.put("m-", () -> {
+            double numberToRemove = Double.parseDouble(inputSection.getInputFieldText());
+            memoryHandler.subtractFromMemory(numberToRemove);
+        });
+        scientificActions.put("mr", () -> memoryHandler.getMemoryValue());
+
+        scientificActions.put("x²", () -> applyUnaryFunction("square"));
+        scientificActions.put("x³", () -> applyUnaryFunction("cube"));
+        scientificActions.put("√", () -> applyUnaryFunction("sqroot"));
+        scientificActions.put("3√", () -> applyUnaryFunction("cubeRoot"));
+        scientificActions.put("1/x", () -> applyUnaryFunction("fraction"));
+        scientificActions.put("x!", () -> applyUnaryFunction("factorial"));
+
+        scientificActions.put("e", () -> inputSection.updateInputField(String.valueOf(Math.E)));
+        scientificActions.put("π", () -> resultHandler.showResult(String.valueOf(Math.PI)));
+
+        scientificActions.put("LN(x)", () -> inputSection.updateInputField("ln"));
+        scientificActions.put("log", () -> inputSection.updateInputField("log"));
+        scientificActions.put("sin", () -> inputSection.updateInputField("sin"));
+        scientificActions.put("cos", () -> inputSection.updateInputField("cos"));
+        scientificActions.put("tan", () -> inputSection.updateInputField("tan"));
+        scientificActions.put("tanh", () -> inputSection.updateInputField("tah"));
+        scientificActions.put("sinh", () -> inputSection.updateInputField("sih"));
+        scientificActions.put("cosh", () -> inputSection.updateInputField("coh"));
+        scientificActions.put("arcSin", () -> inputSection.updateInputField("arcSin"));
+        scientificActions.put("arcCos", () -> inputSection.updateInputField("arcCos"));
+        scientificActions.put("arcTan", () -> inputSection.updateInputField("arcTan"));
+        scientificActions.put("arcSiH", () -> inputSection.updateInputField("arcSiH"));
+        scientificActions.put("arcCoH", () -> inputSection.updateInputField("arcCoH"));
+        scientificActions.put("arcTaH", () -> inputSection.updateInputField("arcTaH"));
+
+        scientificActions.put("x√y", () -> inputSection.updateInputField("√"));
+        scientificActions.put("X^y", () -> inputSection.updateInputField("^"));
+        scientificActions.put("10^x", () -> applyUnaryFunction("powerTen"));
+        scientificActions.put("e^x", () -> applyUnaryFunction("exponentialPower"));
+        scientificActions.put("EE", () -> inputSection.updateInputField("E"));
+
+        // Khusus untuk "2nd"
+        scientificActions.put("2nd", () -> {
+            showInverseFunctions = !showInverseFunctions;
+            for (int i = 0; i < inverseLabels.length; i++) {
+                JButton secondButton = (JButton) getComponent(labels.length - 1 - i);
+                secondButton.setText(showInverseFunctions ? inverseLabels[i]
+                        : labels[labels.length - 1 - i]);
+            }
+        });
     }
 
     private void applyUnaryFunction(String functionName) {

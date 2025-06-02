@@ -94,18 +94,24 @@ class DigitsSection extends JPanel {
     }
 
     private void splitInput(char sign, String input) {
-
         String[] operands = input.split(Pattern.quote(String.valueOf(sign)));
-        double num1 = Double.parseDouble(operands[0]);
-        double num2 = Double.parseDouble(operands[1]);
-        ScientificFunction scientificFunction = new ScientificFunction(num1, "^", inputSection, inputSection);
+
         if (sign == '√') {
+            double num1 = Double.parseDouble(operands[0]);
+            double num2 = Double.parseDouble(operands[1]);
+            ScientificFunction scientificFunction = new ScientificFunction(num1, "^", inputSection, inputSection);
             double result = scientificFunction.customRoot(num2, num1);
+
             inputSection.setInputField(String.valueOf(result));
         } else if (sign == '^') {
+            double num1 = Double.parseDouble(operands[0]);
+            double num2 = Double.parseDouble(operands[1]);
+            ScientificFunction scientificFunction = new ScientificFunction(num1, "^", inputSection, inputSection);
             double result = scientificFunction.customPower(num1, num2);
             inputSection.setInputField(String.valueOf(result));
         } else if (sign == 'E') {
+            double num1 = Double.parseDouble(operands[0]);
+            double num2 = Double.parseDouble(operands[1]);
             double result = num1 * (Math.pow(10, num2));
             inputSection.setInputField(String.valueOf(result));
         } else {
@@ -140,7 +146,6 @@ class DigitsSection extends JPanel {
 
                 }
             }
-
             ArithmeticFunction arithmeticFunction = new ArithmeticFunction(operandsList, operationsList);
             String result = arithmeticFunction.performOperation();
             inputSection.setInputField(result);
