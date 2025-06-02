@@ -1,14 +1,4 @@
 
-import main.BasicArithmetic;
-import main.CalculatorMemory;
-import main.ExponentialFunctions;
-import main.HyperbolicFunctions;
-import main.MemoryHandler;
-import main.ResultHandler;
-import main.ScientificAbstract;
-import main.SpecialFunctions;
-import main.TrigonometricFunctions;
-
 public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory,
         ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
     ResultHandler resultHandler;
