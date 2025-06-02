@@ -11,17 +11,15 @@ class DigitsSection extends JPanel {
     private ArrayList<String> operations = new ArrayList<>();
 
     Font myFont = new Font("Arial", Font.PLAIN, 30);
-    // References to other sections
+
     ArithmeticFunction arithmeticFunction;
     ScientificFunction scientificFunction;
 
     public DigitsSection(InputSection inputSection) {
         this.inputSection = inputSection;
 
-        // Setting grid layout for the panel
         setLayout(new GridLayout(5, 4, 5, 5));
 
-        // Button labels
         String[] buttonLabels = { "C", "+/-", "%", "/",
                 "7", "8", "9", "*",
                 "4", "5", "6", "-",
@@ -33,13 +31,13 @@ class DigitsSection extends JPanel {
             JButton button = new JButton(label);
             button.setFont(myFont);
             button.setForeground(Color.decode("#FFFFFF"));
-            // Setting background colors based on button label
+
             button.setBackground(getBackgroundColor(label));
-            // Adding action listener to the button
+
             button.addActionListener(e -> {
                 String buttonText = button.getText();
                 String input = inputSection.getInputFieldText();
-                // Handling different button actions
+
                 if (buttonText.equals("C")) {
                     inputSection.deleteInputField();
                 } else if (buttonText.equals("del")) {
@@ -53,17 +51,15 @@ class DigitsSection extends JPanel {
                         splitInput(sign, input);
                     }
                 } else if (buttonText.equals("%")) {
-                    // Handling percentage calculation
+
                     handlePercentageCalculation(input);
                 } else if (buttonText.equals("+/-")) {
-                    // Toggling positive/negative sign
+
                     tooglePositiveOrNegativeSign(input);
                 } else {
-                    // Updating input field with button text
                     inputSection.updateInputField(buttonText);
                 }
             });
-            // Adding button to the panel
             add(button);
         }
     }
@@ -94,26 +90,21 @@ class DigitsSection extends JPanel {
     }
 
     private void splitInput(char sign, String input) {
-        // Splitting input based on operator
-        // Splitting input based on operator
+
         String[] operands = input.split(Pattern.quote(String.valueOf(sign)));
         double num1 = Double.parseDouble(operands[0]);
         double num2 = Double.parseDouble(operands[1]);
         ScientificFunction scientificFunction = new ScientificFunction(num1, "^", inputSection, inputSection);
         if (sign == '√') {
-            // Square root operation
             double result = scientificFunction.customRoot(num2, num1);
             inputSection.setInputField(String.valueOf(result));
-        } else if (sign == '^') { // Check for '^' sign
-            // Exponential operation
+        } else if (sign == '^') {
             double result = scientificFunction.customPower(num1, num2);
             inputSection.setInputField(String.valueOf(result));
         } else if (sign == 'E') {
-            // Handling scientific notation
             double result = num1 * (Math.pow(10, num2));
             inputSection.setInputField(String.valueOf(result));
         } else {
-            // Handling basic arithmetic operations
             String[] split = input.split("(?=[-+*/()])|(?<=[-+*/()])");
             ArrayList<Double> operandsList = new ArrayList<>();
             ArrayList<String> operationsList = new ArrayList<>();
@@ -121,7 +112,7 @@ class DigitsSection extends JPanel {
             for (String token : split) {
                 try {
                     if (token.matches("sin\\d*|cos\\d*|tan\\d*|log\\d*|ln\\d*")) {
-                        // Extract numeric part from the token
+
                         String functionName = token.substring(0, 3).trim();
                         String numericPart = token.substring(3).trim();
                         double numericValue = Double.parseDouble(numericPart);
@@ -168,7 +159,6 @@ class DigitsSection extends JPanel {
     public String removeBrackets(String input) {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {
-            // Only append digits, decimal points, or valid mathematical symbols
             if (Character.isDigit(c) || c == '.' || c == '-' || c == '+' || c == '*' || c == '/' || c == '%' || c == '√'
                     || c == '^' || c == 'E') {
                 result.append(c);
@@ -177,12 +167,10 @@ class DigitsSection extends JPanel {
         return result.toString();
     }
 
-    // Method to apply scientific functions
     private void applyScientificFunctions() {
         String inputText = inputSection.getInputFieldText();
         double result = 0;
 
-        // Parsing numeric part and applying corresponding scientific function
         if (inputText.startsWith("sin")) {
             String numericPart = inputText.substring(3);
             double num = Double.parseDouble(numericPart);
@@ -259,7 +247,6 @@ class DigitsSection extends JPanel {
             result = Math.sqrt(num);
         }
 
-        // Updating input field with the result
         inputSection.setInputField(String.valueOf(result));
     }
 
@@ -267,36 +254,30 @@ class DigitsSection extends JPanel {
         double result = 0;
         switch (functionName) {
             case "sin":
-                // Perform sine operation
                 ScientificFunction sinFunction = new ScientificFunction(numericValue, "sin", inputSection,
                         inputSection);
                 result = sinFunction.sin();
                 break;
             case "cos":
-                // Perform cosine operation
                 ScientificFunction cosFunction = new ScientificFunction(numericValue, "cos", inputSection,
                         inputSection);
                 result = cosFunction.cos();
                 break;
             case "tan":
-                // Perform tangent operation
                 ScientificFunction tanFunction = new ScientificFunction(numericValue, "tan", inputSection,
                         inputSection);
                 result = tanFunction.tan();
                 break;
             case "log":
-                // Perform logarithm operation
                 ScientificFunction logFunction = new ScientificFunction(numericValue, "log", inputSection,
                         inputSection);
                 result = logFunction.log();
                 break;
             case "ln":
-                // Perform natural logarithm operation
                 ScientificFunction lnFunction = new ScientificFunction(numericValue, "ln", inputSection, inputSection);
                 result = lnFunction.ln();
                 break;
             default:
-                // Handle invalid function name
                 throw new IllegalArgumentException("Unsupported scientific function: " + functionName);
         }
         return result;
