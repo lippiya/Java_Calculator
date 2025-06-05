@@ -39,7 +39,6 @@ public class ScientificSection extends JPanel {
                 "arcSin", "arcCos", "arcTan",
                 "arcSiH", "arcCoH", "arcTaH" };
 
-        // Inisialisasi action map
         initScientificActions(scientificButtonLabels, renderNewButtons);
 
         for (String label : scientificButtonLabels) {
@@ -104,7 +103,6 @@ public class ScientificSection extends JPanel {
         scientificActions.put("e^x", () -> applyUnaryFunction("exponentialPower"));
         scientificActions.put("EE", () -> inputSection.updateInputField("E"));
 
-        // Khusus untuk "2nd"
         scientificActions.put("2nd", () -> {
             showInverseFunctions = !showInverseFunctions;
             for (int i = 0; i < inverseLabels.length; i++) {

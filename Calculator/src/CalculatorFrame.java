@@ -14,14 +14,11 @@ public class CalculatorFrame extends JFrame {
         ScientificSection scientificSection = new ScientificSection(inputSection);
         DigitsSection digitsSection = new DigitsSection(inputSection);
 
-        // Set the preferred size of the InputSection
         inputSection.setPreferredSize(new Dimension(width, height / 5));
 
-        // Create a main panel to hold all sections
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(inputSection, BorderLayout.NORTH);
 
-        // Create a panel to hold the scientific and digits sections side by side
         JPanel sectionsPanel = new JPanel(new GridLayout(1, 2));
         sectionsPanel.add(scientificSection);
         sectionsPanel.add(digitsSection);

@@ -48,7 +48,6 @@ public class ArithmeticFunction implements ArithmeticInterface {
 
         for (int i = 0; i < operations.size(); i++) {
             String operation = operations.get(i);
-            // Ensure that there are enough operands in the list
             double operand = operands.get(i + 1);
             operationString.append(" ").append(operation).append(" [").append(operand).append("]");
 

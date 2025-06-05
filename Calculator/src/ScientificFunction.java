@@ -4,7 +4,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
     private ResultHandler resultHandler;
     private MemoryHandler memoryHandler;
 
-    // Constructor
     public ScientificFunction(double num, String sign, ResultHandler resultHandler, MemoryHandler memoryHandler) {
         super(num, sign);
         this.resultHandler = resultHandler;
@@ -165,7 +164,6 @@ public class ScientificFunction extends ScientificAbstract implements BasicArith
         return 2.718281828459045;
     }
 
-    // Method to convert degrees to radians
     @Override
     public double rad() {
         return Math.toRadians(num);

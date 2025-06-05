@@ -29,7 +29,6 @@ class DigitsSection extends JPanel {
                 "1", "2", "3", "+",
                 "del", "0", ".", "=" };
 
-        // Creating buttons and setting properties
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
             button.setFont(myFont);
