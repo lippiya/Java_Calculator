@@ -1,6 +1,6 @@
 
 public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory,
-        ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
+        ExponentialFunctions, HyperbolicFunctions, TrigonometricFunctions {
     private ResultHandler resultHandler;
     private MemoryHandler memoryHandler;
 

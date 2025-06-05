@@ -4,6 +4,7 @@ public interface ExponentialFunctions {
 	public double exponentialPower(); 
 	public double ln();
 	public double log(); 
-	public double singleE(); 
+	public double singleE();
+	
 	
 }
