@@ -13,10 +13,10 @@ class DigitsSection extends JPanel {
     private ArrayList<Double> operands = new ArrayList<>();
     private ArrayList<String> operations = new ArrayList<>();
 
-    Font myFont = new Font("Arial", Font.PLAIN, 30);
+    private Font myFont = new Font("Arial", Font.PLAIN, 30);
 
-    ArithmeticFunction arithmeticFunction;
-    ScientificFunction scientificFunction;
+    private ArithmeticFunction arithmeticFunction;
+    private ScientificFunction scientificFunction;
 
     public DigitsSection(InputSection inputSection) {
         this.inputSection = inputSection;

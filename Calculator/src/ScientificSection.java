@@ -8,23 +8,23 @@ interface ScientificAction {
 }
 
 public class ScientificSection extends JPanel {
-    // Font for buttons
-    Font myFont = new Font("Arial", Font.PLAIN, 30);
-    // Reference to InputSection
-    InputSection inputSection;
-    ResultHandler resultHandler;
-    MemoryHandler memoryHandler;
+   
+    private Font myFont = new Font("Arial", Font.PLAIN, 30);
+    
+    private InputSection inputSection;
+    private ResultHandler resultHandler;
+    private MemoryHandler memoryHandler;
 
     private boolean showInverseFunctions = false;
 
-    // Constructor
+   
     private final Map<String, ScientificAction> scientificActions = new HashMap<>();
 
     public ScientificSection(InputSection inputSection) {
         this.inputSection = inputSection;
         this.memoryHandler = inputSection;
         this.resultHandler = inputSection;
-        this.setLayout(new GridLayout(6, 5)); // atau sesuai jumlah tombol
+        this.setLayout(new GridLayout(6, 5)); 
 
         Font myFont = new Font("Arial", Font.BOLD, 24);
         String[] scientificButtonLabels = {

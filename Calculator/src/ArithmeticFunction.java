@@ -2,10 +2,10 @@
 import java.util.ArrayList;
 
 public class ArithmeticFunction implements ArithmeticInterface {
-    // Instance variables to store the numbers and operation sign
+
     private final ArrayList<Double> operands;
     private final ArrayList<String> operations;
-    InputSection inputSection;
+    private InputSection inputSection;
 
     public ArithmeticFunction(ArrayList<Double> operands, ArrayList<String> operations) {
         this.operands = operands;

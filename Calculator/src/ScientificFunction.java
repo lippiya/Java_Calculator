@@ -1,8 +1,8 @@
 
 public class ScientificFunction extends ScientificAbstract implements BasicArithmetic, CalculatorMemory,
         ExponentialFunctions, HyperbolicFunctions, SpecialFunctions, TrigonometricFunctions {
-    ResultHandler resultHandler;
-    MemoryHandler memoryHandler;
+    private ResultHandler resultHandler;
+    private MemoryHandler memoryHandler;
 
     // Constructor
     public ScientificFunction(double num, String sign, ResultHandler resultHandler, MemoryHandler memoryHandler) {
