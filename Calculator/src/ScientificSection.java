@@ -32,8 +32,8 @@ public class ScientificSection extends JPanel {
                 "mr", "2nd", "x²", "x³", "X^y",
                 "e^x", "10^x", "1/x", "√", "3√", "x√y",
                 "LN(x)", "log", "x!", "sin", "cos",
-                "tan", "e", "EE", "Rad", "sinh",
-                "cosh", "tanh", "π", "rand" };
+                "tan", "e","Rad", "sinh",
+                "cosh", "tanh", "π"};
 
         String[] renderNewButtons = {
                 "arcSin", "arcCos", "arcTan",
@@ -101,7 +101,7 @@ public class ScientificSection extends JPanel {
         scientificActions.put("X^y", () -> inputSection.updateInputField("^"));
         scientificActions.put("10^x", () -> applyUnaryFunction("powerTen"));
         scientificActions.put("e^x", () -> applyUnaryFunction("exponentialPower"));
-        scientificActions.put("EE", () -> inputSection.updateInputField("E"));
+
 
         scientificActions.put("2nd", () -> {
             showInverseFunctions = !showInverseFunctions;
